@@ -79,3 +79,7 @@ def jinja():
         my_remote=my_remote, repeat=repeat, date=date, clean_date=clean_date, 
         my_html=my_html
     )
+
+@app.route("/sign-up", methods=["GET", "POST"])
+def sign_up():
+    return render_template("public/sign_up.html")
