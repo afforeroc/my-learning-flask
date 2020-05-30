@@ -3,6 +3,7 @@ from app import app
 from flask import render_template
 from datetime import datetime
 from flask import request, redirect
+from flask import jsonify, make_response
 
 @app.route("/")
 def index():
@@ -133,3 +134,23 @@ def multiple(foo, bar, baz):
     print(f"bar is {bar}")
     print(f"baz is {baz}")
     return f"foo is {foo}, bar is {bar}, baz is {baz}"
+
+@app.route("/json", methods=["POST"])
+def json_example():
+
+    if request.is_json:
+
+        req = request.get_json()
+
+        response_body = {
+            "message": "JSON received!",
+            "sender": req.get("name")
+        }
+
+        res = make_response(jsonify(response_body), 200)
+
+        return res
+
+    else:
+
+        return make_response(jsonify({"message": "Request body must be JSON"}), 400)
